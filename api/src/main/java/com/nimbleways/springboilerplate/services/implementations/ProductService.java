@@ -46,4 +46,15 @@ public class ProductService {
             pr.save(p);
         }
     }
+
+    public void handleFlashSaleProduct(Product p) {
+        if (p.getAvailable() > 0 && (p.getFlashSaleMaxQuantity() - p.getFlashSaleSoldQuantity()) > 0 && p.getFlashSaleEndDate().isAfter(LocalDate.now())) {
+            p.setAvailable(p.getAvailable() - 1);
+            p.setFlashSaleSoldQuantity(p.getFlashSaleSoldQuantity() + 1);
+            pr.save(p);
+        } else {
+            p.setAvailable(0);
+            pr.save(p);
+        }
+    }
 }

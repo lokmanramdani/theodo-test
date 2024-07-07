@@ -60,13 +60,15 @@ public class MyController {
                 } else {
                     ps.handleSeasonalProduct(p);
                 }
-            } else if (p.getType().equals("EXPIRABLE")) {
+            } else if (p.getType().equals("EXPIRABLE")) { // doit etre refactorise, la logique est deja implemente dans le service
                 if (p.getAvailable() > 0 && p.getExpiryDate().isAfter(LocalDate.now())) {
                     p.setAvailable(p.getAvailable() - 1);
                     pr.save(p);
                 } else {
                     ps.handleExpiredProduct(p);
                 }
+            } else if (p.getType().equals("FLASHSALE")) {
+                ps.handleFlashSaleProduct(p);
             }
         }
 
